@@ -1,6 +1,6 @@
 "use strict";
 
-function MyApp()
+function TaskAtHandApp()
 {
 	var version = "v1.0";
 
@@ -9,23 +9,39 @@ function MyApp()
 	}
 
 	this.start = function() {
+
+		$("#new-task-name").keypress(function(e){
+			if (e.which == 13) // Enter key
+			{
+				addTask();
+				return false;
+			}
+
+		}).focus();
 		$("#app>header").append(version);
 		setStatus("ready");
+	};
+
+	function addTask() {
+
+		var taskName = $("#new-task-name").val();
+		if (taskName) {
+			addTaskElement(taskName);
+			//reset the text field
+			$("#new-task-name").val("").focus();
+		}
+	}
+
+	function addTaskElement(taskName) {
+
+		var $task = $("<li></li>");
+		$task.text(taskName);
+		$("#task-list").append($task);
 	}
 }
 
-var myApp = {
-	version: "v1.0",
-	setStatus: function(message) {
-		$("#app>footer").text(message);
-	},
-	start: function() {
-		$("#app>header").append(this.version);
-		this.setStatus
-	}
-};
 
 $(function() {
-	window.app = new MyApp();
+	window.app = new TaskAtHandApp();
 	window.app.start();
 });

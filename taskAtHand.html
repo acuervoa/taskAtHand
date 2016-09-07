@@ -3,15 +3,22 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>App</title>
-	<link rel="stylesheet" href="app.css">
+	<title>Task@Hand</title>
+	<link rel="stylesheet" href="taskAtHand.css">
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="app.js" type="text/javascript" charset="utf-8"></script>
+	<script src="taskAtHand.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 	<div id="app">
-		<header>App</header>
-		<div id="main"></div>
+		<header>Task@Hand </header>
+		<div id="main">
+			<div id="add-task">
+				<label for="new-task-name">Add a task</label>
+				<input type="text" id="new-task-name" title="Enter a task name" placeholder="Enter a task name"/>
+			</div>
+			<ul id="task-list">
+			</ul>
+		</div>
 		<footer></footer>
 	</div>
 
