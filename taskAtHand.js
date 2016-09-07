@@ -2,7 +2,8 @@
 
 function TaskAtHandApp()
 {
-	var version = "v1.0";
+	var version = "v1.0",
+	appStorage = new AppStorage("taskAtHand");
 
 	function setStatus(message){
 		$("#app>footer").text(message);
@@ -40,15 +41,15 @@ function TaskAtHandApp()
 		$("#task-list").append($task);
 
 		$("button.delete", $task).click(function() {
-			$task.remove();
+			removeTask($task);
 		});
 
 		$("button.move-up", $task).click(function() {
-			$task.insertBefore($task.prev());
+			moveTask($task, true);
 		});
 
 		$("button.move-down", $task).click(function() {
-			$task.insertAfter($task.next());
+			moveTask($task, false);
 		});
 
 		$("span.task-name", $task).click(function() {
@@ -78,6 +79,28 @@ function TaskAtHandApp()
 			$span.text($input.val());
 		}
 		$span.show();
+	}
+
+	function saveTaskList() {
+		var tasks = [];
+		$("#task-list .task span.task-name").each(function() {
+			tasks.push($(this).text())
+		});
+		appStorage.setValue("taskList", tasks);
+	}
+
+	function removeTask($task) {
+		$task.remove();
+		saveTaskList();
+	}
+
+	function moveTask($task, moveUp) {
+		if (moveUp) {
+			$task.insertBefore($task.prev());
+		} else {
+			$task.insertAfter($task.next());
+		}
+		saveTaskList();
 	}
 }
 
