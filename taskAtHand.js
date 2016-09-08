@@ -63,6 +63,8 @@ function TaskAtHandApp()
 		}).blur(function() {
 			$(this).hide().siblings("span.task-name").show();
 		});
+
+		$task.click(function() { onSelectTask($task); });
 	}
 
 	function onEditTaskName($span)
@@ -82,6 +84,15 @@ function TaskAtHandApp()
 		}
 		$span.show();
 		saveTaskList();
+	}
+
+	function onSelectTask($task) {
+		if ($task) {
+			// Unselect other tasks
+			$task.siblings(".selected").removeClass("selected");
+			// Select this task
+			$task.addClass("selected");
+		}
 	}
 
 	function saveTaskList() {
@@ -107,8 +118,8 @@ function TaskAtHandApp()
 	}
 
 	function loadTaskList() {
-		var tasks = appStorage.getValue("taskList");
 		if (tasks) {
+		var tasks = appStorage.getValue("taskList");
 			for (var i in tasks) {
 				addTaskElement(tasks[i]);
 			}
