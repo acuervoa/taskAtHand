@@ -21,8 +21,28 @@ function TaskAtHandApp()
 		}).focus();
 		$("#app>header").append(version);
 		loadTaskList();
+		loadTheme();
 		setStatus("ready");
+		$("#theme").change(onChangeTheme);
 	};
+
+	function onChangeTheme() {
+		var theme = $("#theme>option").filter(":selected").val();
+		setTheme(theme);
+		appStorage.setValue("theme", theme);
+	}
+
+	function setTheme(theme) {
+		$("#theme-style").attr("href", "themes/" + theme + ".css");
+	}
+
+	function loadTheme() {
+		var theme = appStorage.getValue("theme");
+		if (theme) {
+			setTheme(theme);
+			$("#theme>option[value=" + theme + "]").attr("selected","selecte");
+		}
+	}
 
 	function addTask() {
 

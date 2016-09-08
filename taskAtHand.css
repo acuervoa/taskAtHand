@@ -119,3 +119,12 @@ button
 	display: block;
 	width: 98%;
 }
+
+#toolbar
+{
+	padding: 0.25em;
+	font-size: 0.8em;
+	color: WhiteSmoke;
+	background-color: rgba(0, 0, 0, 0.4);
+
+}
