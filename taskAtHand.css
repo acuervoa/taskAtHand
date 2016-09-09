@@ -113,7 +113,8 @@ button
 	opacity: 1;
 }
 
-#task-list .task .tools button
+#task-list .task .tools button,
+#task-list .task button.toggle-details
 {
 	margin: 0;
 	padding: 0;
@@ -139,10 +140,19 @@ button
 	background-position: 161px 261px;
 }
 
+#task-list .task button.toggle-details
+{
+	background-position: 23px 136px;
+}
+
+#task-list .task button.toggle-details.expanded
+{
+	background-position: 23px 194px;
+}
 
 #task-list .task .details
 {
-	display:block;
+	display:none;
 	background-color: gray;
 	color: white;
 	border-radius: 4px;
