@@ -117,11 +117,27 @@ button
 {
 	margin: 0;
 	padding: 0;
-	width: 1.25em;
-	height: 1.25em;
 	border: none;
+	color: transparent;
+	width: 18px;
+	height: 18px;
+	background: url(images/small_icons.png);
 }
 
+#task-list .task .tools button.delete
+{
+	background-position: 161px 230px;
+}
+
+#task-list .task .tools button.move-up
+{
+	background-position: 182px 261px;
+}
+
+#task-list .task .tools button.move-down
+{
+	background-position: 161px 261px;
+}
 #new-task-name
 {
 	font-size: 1em;
