@@ -8,7 +8,9 @@
 	<link id="theme-style" href="themes/blue.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.1.0.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="appStorage.js" type="text/javascript" charset="utf-8"></script>
+	<script src="taskList.js" type="text/javascript" charset="utf-8"></script>
 	<script src="taskAtHand.js" type="text/javascript" charset="utf-8"></script>
+
 
 </head>
 <body>
@@ -49,25 +51,25 @@
 				</div>
 				<div class="details">
 					<label>Start date:</label>
-					<input type="date"/><br/>
+					<input type="date" data-field="startDate"/><br/>
 					<label>Due Date:</label>
-					<input type="date"><br/>
-					<label for="">Status:</label>
-					<select>
+					<input type="date" data-field="dueDate"><br/>
+					<label>Status:</label>
+					<select data-field="status">
 						<option value="0">None</option>
 						<option value="1">Not Started</option>
 						<option value="2">Started</option>
 						<option value="3">Completed</option>
 					</select><br/>
 					<label>Priority:</label>
-					<select>
+					<select data-field="priority">
 						<option value="0">None</option>
 						<option value="1">Low</option>
 						<option value="2">Normal</option>
 						<option value="3">High</option>
 					</select><br/>
 					<label>%&nbsp;Complete:</label>
-					<input type="number" min="0" max="100" step="10" value="0"/>
+					<input type="number" data-field="pctComplete" min="0" max="100" step="10" value="0"/>
 				</div>
 			</li>
 		</ul>

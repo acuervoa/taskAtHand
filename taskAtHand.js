@@ -2,11 +2,16 @@
 
 function TaskAtHandApp()
 {
-	var version = "v1.3",
-	appStorage = new AppStorage("taskAtHand");
+	var version = "v3.3",
+	appStorage = new AppStorage("taskAtHand"),
+	taskList = new TaskList(),
+	timeoutId = 0;
 
-	function setStatus(message){
-		$("#app>footer").text(message);
+	function setStatus(msg, noFade){
+		$("#app>footer").text(msg).show();
+		if (!noFade) {
+			$("#app>footer").fadeOut(1000);
+		}
 	}
 
 	this.start = function() {
@@ -48,17 +53,32 @@ function TaskAtHandApp()
 
 		var taskName = $("#new-task-name").val();
 		if (taskName) {
-			addTaskElement(taskName);
+			var task = new Task(taskName);
+			taskList.addTask(task);
+			appStorage.setValue("nextTaskId", Task.nextTaskId);
+			addTaskElement(task);
 			saveTaskList();
 			//reset the text field
 			$("#new-task-name").val("").focus();
 		}
 	}
 
-	function addTaskElement(taskName) {
+	function addTaskElement(task) {
 
 		var $task = $("#task-template .task").clone();
-		$("span.task-name", $task).text(taskName);
+		$task.data("task-id", task.id);
+		$("span.task-name", $task).text(task.name);
+
+		// Populate all of the details fields
+		$(".details input, .details select", $task).each(function(){
+			var $input = $(this);
+			var fieldName = $input.data("field");
+			$input.val(task[fieldName]);
+		});
+
+		$(".details input, .details select", $task).change(function() {
+			onChangeTaskDetails(task.id, $(this));
+		});
 
 		$("#task-list").append($task);
 
@@ -88,6 +108,42 @@ function TaskAtHandApp()
 
 		$("button.toggle-details", $task).click(function() {
 			toggleDetails($task);
+		});
+	}
+
+	function onChangeTaskDetails(taskId, $input) {
+		var task = taskList.getTask(taskId);
+		if(task) {
+			var fieldName = $input.data("field");
+			task[fieldName] = $input.val();
+			saveTaskList();
+		}
+	}
+
+	function saveTaskList() {
+		if(timeoutId) clearTimeout(timeoutId);
+		setStatus("saving changes...", true);
+
+		timeoutId = setTimeout(function() {
+			appStorage.setValue("taskList", taskList.getTasks());
+			timeoutId = 0;
+			setStatus("changes saved.");
+		}, 2000);
+		
+	}
+
+	function loadTaskList() {
+		var tasks = appStorage.getValue("taskList");
+		taskList = new TaskList(tasks);
+		rebuildTaskList();
+	}
+
+	function rebuildTaskList() {
+		// Remove any old task elements
+		$("#task-list").empty();
+		// Create DOM elements for each task
+		taskList.each(function(task){
+			addTaskElement(task);
 		});
 	}
 
@@ -123,14 +179,6 @@ function TaskAtHandApp()
 			// Select this task
 			$task.addClass("selected");
 		}
-	}
-
-	function saveTaskList() {
-		var tasks = [];
-		$("#task-list .task span.task-name").each(function() {
-			tasks.push($(this).text())
-		});
-		appStorage.setValue("taskList", tasks);
 	}
 
 	function removeTask($task) {
