@@ -38,14 +38,37 @@
 
 	<div id="templates" class="hidden">
 		<ul id="task-template">
-			<li class="task"> 
+			<li class="task">
+				<button class="toggle-details">+</button>
+				<span class="task-name"></span>
+				<input type="text" class="task-name hidden"/>
 				<div class="tools">
 					<button class="delete" title="Delete">X</button>
 					<button class="move-up" title="Up">^</button>
 					<button class="move-down" title="Down">v</button>
 				</div>
-				<span class="task-name"></span>
-				<input type="text" class="task-name hidden"/>
+				<div class="details">
+					<label>Start date:</label>
+					<input type="date"/><br/>
+					<label>Due Date:</label>
+					<input type="date"><br/>
+					<label for="">Status:</label>
+					<select>
+						<option value="0">None</option>
+						<option value="1">Not Started</option>
+						<option value="2">Started</option>
+						<option value="3">Completed</option>
+					</select><br/>
+					<label>Priority:</label>
+					<select>
+						<option value="0">None</option>
+						<option value="1">Low</option>
+						<option value="2">Normal</option>
+						<option value="3">High</option>
+					</select><br/>
+					<label>%&nbsp;Complete:</label>
+					<input type="number" min="0" max="100" step="10" value="0"/>
+				</div>
 			</li>
 		</ul>
 	</div>
